@@ -7,7 +7,7 @@
 #include "timer.h"
 #include "spmv.h"
 #include "my_sparse.h"
-// Added libraries
+
 #include <gsl/gsl_blas.h>
 #include <gsl/gsl_spblas.h>
 #define DEFAULT_SIZE 1024
