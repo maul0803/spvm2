@@ -2,8 +2,8 @@
 // Created by cytech on 02/10/24.
 //
 
-#ifndef SPVM_MY_SPARSE_H
-#define SPVM_MY_SPARSE_H
+#ifndef MY_CSR_H
+#define MY_CSR_H
 
 typedef struct {
     unsigned int *row_offsets;
@@ -16,6 +16,6 @@ typedef struct {
 CSR convert_dense_to_CSR(unsigned int n, const double mat[]);
 double* convert_CSR_to_dense(CSR csr, unsigned int n);
 void free_CSR(CSR *csr);
-int my_sparse(CSR *csr, double vec[], double result[]);
+int my_sparse_CSR(CSR *csr, double vec[], double result[]);
 
-#endif //SPVM_MY_SPARSE_H
+#endif

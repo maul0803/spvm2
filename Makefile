@@ -19,7 +19,7 @@ LDFLAGS = -lopenblas
 LDLIBS = -lm -lopenblas -lgsl
 
 # Source files
-SOURCES = timer.c spmv.c my_dense.c my_sparse.c
+SOURCES = timer.c spmv.c my_dense.c my_CSR.c my_CSC.c
 
 # Object files
 OBJECTS = $(SOURCES:.c=.o)

@@ -1,5 +1,5 @@
 #include "spmv.h"
-#include "my_sparse.h"
+#include "my_CSR.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -57,7 +57,7 @@ void free_CSR(CSR *csr) {
     free(csr->values);
 }
 
-int my_sparse(CSR *csr, double vec[], double result[]) {
+int my_sparse_CSR(CSR *csr, double vec[], double result[]) {
     // Go through all rows
     for (unsigned int i = 0; i < csr->size_row_offsets - 1; i++) {
         result[i] = 0.0;

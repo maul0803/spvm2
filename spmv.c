@@ -6,7 +6,8 @@
 #include <gsl/gsl_vector.h>
 #include "timer.h"
 #include "spmv.h"
-#include "my_sparse.h"
+#include "my_CSR.h"
+#include "my_CSC.h"
 
 #include <gsl/gsl_blas.h>
 #include <gsl/gsl_spblas.h>
@@ -91,7 +92,7 @@ int main(int argc, char *argv[])
   //
   // Dense computation using CBLAS (eg. GSL's CBLAS implementation)
   //
-  printf("\nDense computation\n----------------\n");
+  //printf("\nDense computation\n----------------\n");
 
   timeinfo start, now;
   timestamp(&start);
@@ -99,12 +100,11 @@ int main(int argc, char *argv[])
   cblas_dgemv(CblasRowMajor, CblasNoTrans, size, size, 1.0, mat, size, vec, 1, 0.0, refsol, 1);
 
   timestamp(&now);
-  printf("Time taken by CBLAS dense computation: %ld ms\n", diff_milli(&start, &now));
 
   //
   // Using your own dense implementation
   //
-  printf("\nMy Own Dense computation\n----------------\n");
+  printf("My Own Dense computation\n----------------\n");
   timestamp(&start);
 
   my_dense(size, mat, vec, mysol);
@@ -116,66 +116,36 @@ int main(int argc, char *argv[])
     printf("Result my dense is ok!\n");
   else
     printf("Result my dense is wrong!\n");
+  
+  // Your own sparse CSR implementation
   //
-  // Let's try now SpMV: Sparse Matrix - Dense Vector computation
-  //
-  printf("\nSparse computation\n----------------\n");
-  // Convert mat to a sparse format: CSR
-  // Use the gsl_spmatrix struct as datatype
-  // Sparse computation using GSL's sparse algebra functions
-  //
-  // Initialisation of the vector
-  gsl_vector *gsl_vec = gsl_vector_calloc(size);
-  for (int i = 0; i < size; i++){
-      double val = vec[i];
-      gsl_vector_set(gsl_vec, i, val);
-  }
-  // Initialisation of the dense matrix
-  gsl_matrix *gsl_dense = gsl_matrix_alloc(size, size);
-  for (int i = 0; i < size; i++) {
-      for (int j = 0; j < size; j++) {
-          double val = mat[i * size + j];
-          gsl_matrix_set(gsl_dense, i, j, val);
-      }
-  }
-  // Convert dense to COO format
-  gsl_spmatrix *gsl_coo = gsl_spmatrix_alloc(size, size);
-  gsl_spmatrix_d2sp(gsl_coo, gsl_dense);
-  // Convert COO to CSR format
-  gsl_spmatrix *gsl_csr = gsl_spmatrix_crs(gsl_coo);
-  // Multiply the matrix and the vector
-  gsl_vector *gsl_mysol = gsl_vector_calloc(size);
-  // Results
-  timestamp(&start);
-  gsl_spblas_dgemv(CblasNoTrans, 1, gsl_csr, gsl_vec, 0, gsl_mysol);
-  timestamp(&now);
-  printf("Time taken by SpMV sparse matrix - vector product: %ld ms\n", diff_milli(&start, &now));
-
-  // Initialisation of the solution
-  for (int i = 0; i < size; i++){
-      double val = gsl_vector_get(gsl_mysol, i);
-      mysol[i] = val;
-  }
-  if (check_result(refsol, mysol, size) == 1)
-      printf("Result SpMV sparse implementation is ok!\n");
-  else
-      printf("Result SpMV spare implementation is wrong!\n");
-
-
-  // Your own sparse implementation
-  //
-  printf("\nMy Own Spare computation\n----------------\n");
+  printf("\nMy Own Spare CSR computation\n----------------\n");
 
   CSR per_mat_csr = convert_dense_to_CSR(size, mat);
   // Compare times (and computation correctness!)
   timestamp(&start);
-  my_sparse(&per_mat_csr, vec, mysol);
+  my_sparse_CSR(&per_mat_csr, vec, mysol);
   timestamp(&now);
-  printf("Time taken by my own sparse matrix - vector product: %ld ms\n", diff_milli(&start, &now));
+  printf("Time taken by my own sparse matrix CSR - vector product: %ld ms\n", diff_milli(&start, &now));
   if (check_result(refsol, mysol, size) == 1)
       printf("Result own spare implementation is ok!\n");
   else
       printf("Result own spare implementation is wrong!\n");
+  // Your own sparse CSC implementation
+  //
+  printf("\nMy Own Spare CSC computation\n----------------\n");
+
+  CSC per_mat_csc = convert_dense_to_CSC(size, mat);
+  // Compare times (and computation correctness!)
+  timestamp(&start);
+  my_sparse_CSC(&per_mat_csc, vec, mysol);
+  timestamp(&now);
+  printf("Time taken by my own sparse matrix CSC - vector product: %ld ms\n", diff_milli(&start, &now));
+  if (check_result(refsol, mysol, size) == 1)
+      printf("Result own spare implementation is ok!\n");
+  else
+      printf("Result own spare implementation is wrong!\n");
+
   // Free resources
   free(mat);
   free(vec);
