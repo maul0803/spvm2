@@ -39,18 +39,6 @@ void free_CSC(CSC *csc) {
     free(csc->values);
 }
 
-int my_sparse(CSC *csc, double vec[], double result[]) {
-    // Go through all rows
-    for (unsigned int i = 0; i < csc->size_column_offsets - 1; i++) {
-        result[i] = 0.0;
-        // Go through all columns of each row
-        for (unsigned int j = csc->column_offsets[i]; j < csc->column_offsets[i + 1]; j++) {
-            result[i] += csc->values[j] * vec[csc->row_indices[j]]; // Select the column shortcut
-        }
-    }
-    return 0;
-}
-
 int my_sparse_CSC(CSC *csc, double vec[], double result[]) {
     for (unsigned int i = 0; i < csc->size_column_offsets - 1; i++) {
         result[i] = 0.0;

@@ -8,6 +8,7 @@
 #include "spmv.h"
 #include "my_CSR.h"
 #include "my_CSC.h"
+#include "my_COO.h"
 
 #include <gsl/gsl_blas.h>
 #include <gsl/gsl_spblas.h>
@@ -117,6 +118,21 @@ int main(int argc, char *argv[])
   else
     printf("Result my dense is wrong!\n");
   
+  // Your own sparse COO implementation
+  //
+  printf("\nMy Own Spare COO computation\n----------------\n");
+
+  COO per_mat_coo = convert_dense_to_COO(size, mat);
+  // Compare times (and computation correctness!)
+  timestamp(&start);
+  my_sparse_COO(&per_mat_coo, vec, mysol);
+  timestamp(&now);
+  printf("Time taken by my own sparse matrix COO - vector product: %ld ms\n", diff_milli(&start, &now));
+  if (check_result(refsol, mysol, size) == 1)
+      printf("Result own spare COO implementation is ok!\n");
+  else
+      printf("Result own spare COO implementation is wrong!\n");
+
   // Your own sparse CSR implementation
   //
   printf("\nMy Own Spare CSR computation\n----------------\n");
@@ -128,9 +144,9 @@ int main(int argc, char *argv[])
   timestamp(&now);
   printf("Time taken by my own sparse matrix CSR - vector product: %ld ms\n", diff_milli(&start, &now));
   if (check_result(refsol, mysol, size) == 1)
-      printf("Result own spare implementation is ok!\n");
+      printf("Result own spare CSR implementation is ok!\n");
   else
-      printf("Result own spare implementation is wrong!\n");
+      printf("Result own spare CSR implementation is wrong!\n");
   // Your own sparse CSC implementation
   //
   printf("\nMy Own Spare CSC computation\n----------------\n");
@@ -142,9 +158,9 @@ int main(int argc, char *argv[])
   timestamp(&now);
   printf("Time taken by my own sparse matrix CSC - vector product: %ld ms\n", diff_milli(&start, &now));
   if (check_result(refsol, mysol, size) == 1)
-      printf("Result own spare implementation is ok!\n");
+      printf("Result own spare CSC implementation is ok!\n");
   else
-      printf("Result own spare implementation is wrong!\n");
+      printf("Result own spare CSC implementation is wrong!\n");
 
   // Free resources
   free(mat);
