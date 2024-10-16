@@ -32,9 +32,9 @@ autovectorization (use -fast in ICC instead).
 • The last column, Ref, will show the reference time for each
 operation, using GSL in Table 1 and Intel MKL in Table 2.
 
-• The following tests were conducted on the finistrae3 system with the configuration compute -c 64 --mem 8:
-    - In the case of the GCC compiler, the flag -novec was replaced with -fno-tree-vectorize.
-    - In the case of the GCC compiler, the flag -vec was replaced with -ftree-vectorize.
+• The following tests were conducted on the finistrae3 system with the configuration compute -c 64 --mem 8:  
+    - In the case of the GCC compiler, the flag -novec was replaced with -fno-tree-vectorize.  
+    - In the case of the GCC compiler, the flag -vec was replaced with -ftree-vectorize.  
 
 ![Table1](images/Table1.png)
 ![Table2](images/Table2.png)
