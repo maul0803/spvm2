@@ -1,12 +1,25 @@
 # Compiler to use
-CC = gcc
+CC = icc
 
 # Default build mode
 BUILD = release
 
+# Compute
+# compute -c 64 --mem 8
+
+# Load Itel MKL
+# module load cesga/2022
+# module load gmkl/2023.2.0
+
+# Load icc
+# module load intel
+# icc -qopenmp -o omphello_c /opt/cesga/job-scripts-examples/omphello.c
+
 # Compiler flags for release mode
+# -fno-tree-vectorize if -novec doesn't work
+# -ftree-vectorize if -vec doesn't work
 ifeq ($(BUILD),release)
-    CFLAGS = -c -Wall -Wextra #-Ofast #Ofast for  speed (less accuracy)
+    CFLAGS = -c -Wall -Wextra -Ofast-vec
 else
     CFLAGS = -g -O0 -c -Wall -Wextra #g for Debug
 endif

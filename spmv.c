@@ -1,19 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <gsl/gsl_cblas.h>      // CBLAS in GSL (the GNU Scientific Library)
-#include <gsl/gsl_spmatrix.h>
-#include <gsl/gsl_vector.h>
+//#include <gsl/gsl_spmatrix.h>
+//#include <gsl/gsl_vector.h>
 #include "timer.h"
 #include "spmv.h"
 #include "my_CSR.h"
 #include "my_CSC.h"
 #include "my_COO.h"
 
-#include <gsl/gsl_blas.h>
-#include <gsl/gsl_spblas.h>
-#define DEFAULT_SIZE 1024
-#define DEFAULT_DENSITY 25.0
+//#include <gsl/gsl_blas.h>
+//#include <gsl/gsl_spblas.h>
+
+#include <mkl.h>  // Intel MKL
+//#include <gsl/gsl_cblas.h>      // CBLAS in GSL (the GNU Scientific Library)
+#define DEFAULT_SIZE 16384
+#define DEFAULT_DENSITY 0.1
 
 unsigned int populate_sparse_matrix(double mat[], unsigned int n, double density, unsigned int seed)
 {
@@ -93,7 +95,7 @@ int main(int argc, char *argv[])
   //
   // Dense computation using CBLAS (eg. GSL's CBLAS implementation)
   //
-  //printf("\nDense computation\n----------------\n");
+  //printf("CBLAS dense computation\n----------------\n");
 
   timeinfo start, now;
   timestamp(&start);
@@ -101,11 +103,12 @@ int main(int argc, char *argv[])
   cblas_dgemv(CblasRowMajor, CblasNoTrans, size, size, 1.0, mat, size, vec, 1, 0.0, refsol, 1);
 
   timestamp(&now);
+  printf("Time taken by CBLAS dense computation: %ld ms\n", diff_milli(&start, &now));
 
   //
   // Using your own dense implementation
   //
-  printf("My Own Dense computation\n----------------\n");
+  //printf("\nMy Own Dense computation\n----------------\n");
   timestamp(&start);
 
   my_dense(size, mat, vec, mysol);
@@ -120,7 +123,7 @@ int main(int argc, char *argv[])
   
   // Your own sparse COO implementation
   //
-  printf("\nMy Own Spare COO computation\n----------------\n");
+  //printf("\nMy Own Spare COO computation\n----------------\n");
 
   COO per_mat_coo = convert_dense_to_COO(size, mat);
   // Compare times (and computation correctness!)
@@ -135,7 +138,7 @@ int main(int argc, char *argv[])
 
   // Your own sparse CSR implementation
   //
-  printf("\nMy Own Spare CSR computation\n----------------\n");
+  //printf("\nMy Own Spare CSR computation\n----------------\n");
 
   CSR per_mat_csr = convert_dense_to_CSR(size, mat);
   // Compare times (and computation correctness!)
@@ -149,7 +152,7 @@ int main(int argc, char *argv[])
       printf("Result own spare CSR implementation is wrong!\n");
   // Your own sparse CSC implementation
   //
-  printf("\nMy Own Spare CSC computation\n----------------\n");
+  //printf("\nMy Own Spare CSC computation\n----------------\n");
 
   CSC per_mat_csc = convert_dense_to_CSC(size, mat);
   // Compare times (and computation correctness!)
@@ -161,7 +164,6 @@ int main(int argc, char *argv[])
       printf("Result own spare CSC implementation is ok!\n");
   else
       printf("Result own spare CSC implementation is wrong!\n");
-
   // Free resources
   free(mat);
   free(vec);
