@@ -14,3 +14,6 @@ eg. `-lopenblas` instead of `-lgslcblas`
 The basetype in GSL for working with sparse matrices is `gsl_spmatrix`.
 GSL also provides functions to help convert you dense matrices into a
 sparse format.
+
+![Table1](images/Table1.png)
+![Table2](images/Table2.png)
