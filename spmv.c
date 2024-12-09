@@ -12,8 +12,8 @@
 //#include <gsl/gsl_blas.h>
 //#include <gsl/gsl_spblas.h>
 
-#include <mkl.h>  // Intel MKL
-//#include <gsl/gsl_cblas.h>      // CBLAS in GSL (the GNU Scientific Library)
+// #include <mkl.h>  // Intel MKL mpicc
+#include <gsl/gsl_cblas.h>      // CBLAS in GSL (the GNU Scientific Library) gcc
 #define DEFAULT_SIZE 16384
 #define DEFAULT_DENSITY 0.1
 

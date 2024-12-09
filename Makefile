@@ -1,5 +1,5 @@
 # Compiler to use
-CC = icc
+CC = gcc
 
 # Default build mode
 BUILD = release
@@ -19,9 +19,9 @@ BUILD = release
 # -fno-tree-vectorize if -novec doesn't work
 # -ftree-vectorize if -vec doesn't work
 ifeq ($(BUILD),release)
-    CFLAGS = -c -Wall -Wextra -Ofast-vec
+    CFLAGS = -g -c -Wall -Wextra -Ofast -ftree-vectorize
 else
-    CFLAGS = -g -O0 -c -Wall -Wextra #g for Debug
+    CFLAGS = -g -O0 -c -Wall -Wextra
 endif
 
 # Linker flags
