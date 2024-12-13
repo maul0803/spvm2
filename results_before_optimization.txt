@@ -1,40 +1,40 @@
-Time taken by CBLAS dense computation: 116 ms
-Time taken by my dense matrix-vector product: 348 ms
+Time taken by CBLAS dense computation: 108 ms
+Time taken by my dense matrix-vector product: 291 ms
 Result my dense is ok!
-Time taken by my own sparse matrix COO - vector product: 73 ms
+Time taken by my own sparse matrix COO - vector product: 63 ms
 Result own spare COO implementation is ok!
-Time taken by my own sparse matrix CSR - vector product: 31 ms
+Time taken by my own sparse matrix CSR - vector product: 40 ms
 Result own spare CSR implementation is ok!
-Time taken by my own sparse matrix CSC - vector product: 44 ms
+Time taken by my own sparse matrix CSC - vector product: 26 ms
 Result own spare CSC implementation is ok!
 -------------------------------------------------
-Time taken by CBLAS dense computation: 127 ms
-Time taken by my dense matrix-vector product: 370 ms
+Time taken by CBLAS dense computation: 109 ms
+Time taken by my dense matrix-vector product: 284 ms
 Result my dense is ok!
-Time taken by my own sparse matrix COO - vector product: 77 ms
+Time taken by my own sparse matrix COO - vector product: 61 ms
 Result own spare COO implementation is ok!
-Time taken by my own sparse matrix CSR - vector product: 34 ms
+Time taken by my own sparse matrix CSR - vector product: 27 ms
 Result own spare CSR implementation is ok!
-Time taken by my own sparse matrix CSC - vector product: 29 ms
+Time taken by my own sparse matrix CSC - vector product: 26 ms
 Result own spare CSC implementation is ok!
 -------------------------------------------------
-Time taken by CBLAS dense computation: 113 ms
-Time taken by my dense matrix-vector product: 380 ms
+Time taken by CBLAS dense computation: 109 ms
+Time taken by my dense matrix-vector product: 287 ms
 Result my dense is ok!
-Time taken by my own sparse matrix COO - vector product: 72 ms
+Time taken by my own sparse matrix COO - vector product: 61 ms
 Result own spare COO implementation is ok!
-Time taken by my own sparse matrix CSR - vector product: 34 ms
+Time taken by my own sparse matrix CSR - vector product: 28 ms
 Result own spare CSR implementation is ok!
-Time taken by my own sparse matrix CSC - vector product: 33 ms
+Time taken by my own sparse matrix CSC - vector product: 27 ms
 Result own spare CSC implementation is ok!
 -------------------------------------------------
-Time taken by CBLAS dense computation: 116 ms
-Time taken by my dense matrix-vector product: 360 ms
+Time taken by CBLAS dense computation: 111 ms
+Time taken by my dense matrix-vector product: 320 ms
 Result my dense is ok!
-Time taken by my own sparse matrix COO - vector product: 98 ms
+Time taken by my own sparse matrix COO - vector product: 63 ms
 Result own spare COO implementation is ok!
-Time taken by my own sparse matrix CSR - vector product: 33 ms
+Time taken by my own sparse matrix CSR - vector product: 28 ms
 Result own spare CSR implementation is ok!
-Time taken by my own sparse matrix CSC - vector product: 39 ms
+Time taken by my own sparse matrix CSC - vector product: 28 ms
 Result own spare CSC implementation is ok!
 -------------------------------------------------
