@@ -19,21 +19,10 @@ CSC convert_dense_to_CSC(const unsigned int n, const double mat[]){
     csc.size_column_offsets = size_column_offsets;
     csc.size_row_indices_values = size_row_indices_values;
     unsigned int buffer = 0;
-    /*for (unsigned int j = 0; j < n; j++){
-        csc.column_offsets[j] = buffer;
-        for (unsigned int i = 0; i < n ; i++){
-            if (mat[i * n + j] !=0){
-                csc.row_indices[buffer] = i;
-                csc.values[buffer] = mat[i * n + j];
-                buffer ++;
-            }
-        }
-    }*/
-    // Magic trick
     for (unsigned int j = 0; j < n; j++) {
         csc.column_offsets[j] = buffer;
         for (unsigned int i = 0; i < n; i++) {
-            if (mat[i * n + j] != 0) {
+            if (mat[j + i * n] != 0) {// Row major
                 buffer++;
             }
         }
@@ -41,9 +30,9 @@ CSC convert_dense_to_CSC(const unsigned int n, const double mat[]){
     buffer = 0;
     for (unsigned int j = 0; j < n; j++) {
         for (unsigned int i = 0; i < n; i++) {
-            if (mat[i * n + j] != 0) {
+            if (mat[j + i * n] != 0) { // Row major
                 csc.row_indices[buffer] = i;
-                csc.values[buffer] = mat[i * n + j];
+                csc.values[buffer] = mat[j + i * n];
                 buffer++;
             }
         }

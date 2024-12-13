@@ -169,5 +169,8 @@ int main(int argc, char *argv[])
   free(vec);
   free(refsol);
   free(mysol);
+  free_COO(&per_mat_coo);
+  free_CSR(&per_mat_csr);
+  free_CSC(&per_mat_csc);
   return 0;
 }
